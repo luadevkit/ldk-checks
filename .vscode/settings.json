@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.rockspec.in": "lua",
+    "*.rockspec": "lua",
+    "*.ld.in": "lua",
+    "*.ld": "lua"
+  }
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<head>
+    <title>ldk-checks 0.1.0-1</title>
+    <link rel="stylesheet" href="ldoc_pale.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldk-checks</h1>
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>ldk.checks</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>ldk.checks</code></h1>
+<p>
+
+</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+  <tr>
+  <td class="name" nowrap><a href="#argerror">argerror(arg[, extramsg])</a></td>
+  <td class="summary">Raises an error reporting a problem with argument <code>arg</code> of the function that called it,
+ using a standard message including <code>extramsg</code> as a comment.</td>
+  </tr>
+  <tr>
+  <td class="name" nowrap><a href="#checktype">checktype(arg, expected)</a></td>
+  <td class="summary">Checks whether an argument of the calling function is of the given type.</td>
+  </tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "argerror"></a>
+    <strong>argerror(arg[, extramsg])</strong>
+    </dt>
+    <dd>
+    Raises an error reporting a problem with argument <code>arg</code> of the function that called it,
+ using a standard message including <code>extramsg</code> as a comment. </p>
+
+<p> Equivalent to luaL_argerror in the Lua C API.</p>
+
+<p> This function never returns.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arg</span>
+            <span class="types"><span class="type">int</span></span>
+         argument number.
+        </li>
+        <li><span class="parameter">extramsg</span>
+            <span class="types"><span class="type">string</span></span>
+         additional text to use as comment.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> foo(t, filter)
+  argerror(<span class="number">1</span>, <span class="string">"extra message..."</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "checktype"></a>
+    <strong>checktype(arg, expected)</strong>
+    </dt>
+    <dd>
+
+<p>Checks whether an argument of the calling function is of the given type.
+ Equivalent to luaL_checktype in the Lua C API.</p>
+
+<p> The type of the argument at position <code>arg</code> must match one of the types in `expected.</p>
+
+<p> Each type can be the name of a primitive Lua type:</p>
+
+<ul>
+    <li><code>nil</code></li>
+    <li><code>boolean</code></li>
+    <li><code>userdata</code></li>
+    <li><code>number</code></li>
+    <li><code>string</code></li>
+    <li><code>table</code></li>
+    <li><code>function</code></li>
+    <li><code>thread</code></li>
+</ul>
+
+<p> or one of the following options:</p>
+
+<ul>
+    <li><code>any</code> (accepts any non-nil argument type)</li>
+    <li><code>:id</code> (accepts only the exact string ':id')</li>
+    <li><code>file</code> (accepts a file object)</li>
+    <li><code>integer</code> (accepts an integer number)</li>
+</ul>
+
+<p> The type description can be prefixed either with a question mark, which makes it optional:</p>
+
+<pre><code>checktype(1, '?table') -- will match a table or nil
+</code></pre>
+
+<p>  or with a exclamation mark, which makes it check against its complementary descriptor:</p>
+
+<pre><code>checktype(1, '!table') -- will match anything but a table
+</code></pre>
+
+<p> Finally, multiple types can be accepted, if their names are concatenated with a bar <code>"|"</code>:</p>
+
+<pre><code>checktype(1, 'int|table') -- will match an integer or a table
+</code></pre>
+
+
+
+    <h3>Remarks:</h3>
+    <ul>
+         Prefixes <code>"?"</code> and <code>"!"</code> are mutually exclusive.
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arg</span>
+            <span class="types"><span class="type">int</span></span>
+         position of the argument to be tested
+        </li>
+        <li><span class="parameter">expected</span>
+            <span class="types"><span class="type">string</span></span>
+         descriptor of the acceptable types
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> foo(t, filter)
+  checktype(<span class="number">1</span>, <span class="string">'table'</span>)
+  checktype(<span class="number">2</span>, <span class="string">'function'</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+</div> <!-- id="container" -->
+</body>
+</html>
+
