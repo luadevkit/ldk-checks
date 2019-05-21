@@ -45,5 +45,8 @@ install-deps: $(rockspec)
 build: $(rockspec)
 	luarocks make $(rockspec)
 
+upload:
+	luarocks upload --temp-key=$(LDK_LUAROCKS_KEY) $(rockspec)
+
  circleci-build:
 	$(circleci) build --job build
