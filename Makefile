@@ -4,9 +4,9 @@ sed = $(LUA) scripts/sed.lua
 mkver = $(LUA) scripts/mkver.lua
 mkpath = $(LUA) scripts/mkpath.lua
 
-package = ldk-checks
-version = $(shell $(mkver))-1
-rockspec = rockspecs/$(package)-$(version).rockspec
+rock_name = ldk-checks
+rock_version = $(shell $(mkver))
+rockspec = rockspecs/$(rock_name)-$(rock_version)-1.rockspec
 sources = csrc/checks.c
 
 makefile_path = $(abspath $(lastword $(MAKEFILE_LIST)))
@@ -25,7 +25,7 @@ circleci = 	docker run --interactive --tty --rm \
 default: spec
 
 build-aux/config.ld: build-aux/config.ld.in
-	$(sed) build-aux/config.ld.in build-aux/config.ld PACKAGE_NAME=$(package) PACKAGE_VERSION=$(version)
+	$(sed) build-aux/config.ld.in build-aux/config.ld ROCK_NAME=$(rock_name) ROCK_VERSION=$(rock_version)
 
 docs: build-aux/config.ld
 	ldoc -c build-aux/config.ld .
@@ -46,14 +46,13 @@ build: $(rockspec)
 circleci-shell:
 	$(circleci)
 
-init:
-	$(mkver) init
-	$(sed) rockspecs/$(package).rockspec.in rockspecs/$(package)-dev-1.rockspec PACKAGE_NAME=$(package) PACKAGE_VERSION=dev-1
+rockspec-dev:
+	$(sed) rockspecs/$(rock_name).rockspec.in rockspecs/$(rock_name)-dev-1.rockspec ROCK_NAME=$(rock_name) ROCK_VERSION=dev
 
 rockspec: $(rockspec)
 
-$(rockspec): rockspecs/$(package).rockspec.in
-	$(sed) rockspecs/$(package).rockspec.in $(rockspec) PACKAGE_NAME=$(package) PACKAGE_VERSION=$(version)
+$(rockspec): rockspecs/$(rock_name).rockspec.in
+	$(sed) rockspecs/$(rock_name).rockspec.in $(rockspec) ROCK_NAME=$(rock_name) ROCK_VERSION=$(rock_version)
 
 publish: $(rockspec)
 	luarocks upload --temp-key=$(LDK_LUAROCKS_KEY) $(rockspec)

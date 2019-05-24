@@ -1,6 +1,6 @@
-project = '@PACKAGE_NAME@'
-version = '@PACKAGE_VERSION@'
-title = '@PACKAGE_NAME@ @PACKAGE_VERSION@'
+project = '@ROCK_NAME@'
+version = '@ROCK_VERSION@'
+title = '@ROCK_NAME@ @ROCK_VERSION@'
 description = 'Function arguments type checking'
 dir = '../docs'
 file = {

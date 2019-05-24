@@ -1,9 +1,10 @@
 rockspec_format = '3.0'
 
-package = '@PACKAGE_NAME@'
-version = '@PACKAGE_VERSION@'
+package = '@ROCK_NAME@'
+version = '@ROCK_VERSION@-1'
 source = {
-  url = 'git://github.com/luadevkit/@PACKAGE_NAME@.git'
+  url = 'git://github.com/luadevkit/@ROCK_NAME@.git',
+  branch = '@ROCK_VERSION@'
 }
 description = {
   summary = 'LDK - function arguments type checking',
