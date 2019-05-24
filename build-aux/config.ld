@@ -1,6 +1,6 @@
 project = 'ldk-checks'
-version = '0.1.0-1'
-title = 'ldk-checks 0.1.0-1'
+version = '0.1.0'
+title = 'ldk-checks 0.1.0'
 description = 'Function arguments type checking'
 dir = '../docs'
 file = {

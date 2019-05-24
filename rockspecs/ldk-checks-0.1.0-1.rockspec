@@ -3,7 +3,8 @@ rockspec_format = '3.0'
 package = 'ldk-checks'
 version = '0.1.0-1'
 source = {
-  url = 'git://github.com/luadevkit/ldk-checks.git'
+  url = 'git://github.com/luadevkit/ldk-checks.git',
+  branch = '0.1.0'
 }
 description = {
   summary = 'LDK - function arguments type checking',
