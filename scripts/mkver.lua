@@ -20,10 +20,6 @@ local function fail(...)
   os.exit(1)
 end
 
-local StringOpt = function(args, i)
-  return 1, args[i + 1]
-end
-
 local BoolOpt = function()
   return 0, true
 end
@@ -57,12 +53,8 @@ local function mk_string(version)
   return ('%d.%d.%d'):format(version.major, version.minor, version.patch)
 end
 
-local function make_tag(version)
-  return 'v' .. mk_string(version)
-end
-
 local function parse_tag(tag)
-  local major, minor, patch = tag:match('^v?(%d+)%.(%d+)%.(%d+)')
+  local major, minor, patch = tag:match('^(%d+)%.(%d+)%.(%d+)')
   if major then
     major, minor, patch = tonumber(major), tonumber(minor), tonumber(patch)
     if not major or not minor or not patch then
@@ -147,7 +139,7 @@ local function tag_version(...)
   if opts.force then
     git_cmd = git_cmd .. '-f '
   end
-  git_cmd = git_cmd .. make_tag(version)
+  git_cmd = git_cmd .. mk_string(version)
   log(git_cmd)
   os.execute(git_cmd)
 end
@@ -163,7 +155,7 @@ end
 local function list_tags()
   local f = io.popen('git tag')
   for line in f:lines() do
-    local tag = line:match('^v%d+%.%d+%.%d+$')
+    local tag = line:match('^%d+%.%d+%.%d+$')
     if tag then
       print(tag)
     end
