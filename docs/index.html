@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <head>
-    <title>ldk-checks 0.1.0</title>
+    <title>ldk-checks 0.2.0</title>
     <link rel="stylesheet" href="ldoc_pale.css" type="text/css" />
 </head>
 <body>
@@ -52,8 +52,17 @@
  using a standard message including <code>extramsg</code> as a comment.</td>
   </tr>
   <tr>
+  <td class="name" nowrap><a href="#argerrorf">argerrorf(arg, fmt, ...)</a></td>
+  <td class="summary">Raises an error reporting a problem with argument <code>arg</code> of the function that called it,
+ using a standard message including a formatted message as a comment.</td>
+  </tr>
+  <tr>
   <td class="name" nowrap><a href="#checktype">checktype(arg, expected)</a></td>
   <td class="summary">Checks whether an argument of the calling function is of the given type.</td>
+  </tr>
+  <tr>
+  <td class="name" nowrap><a href="#checktypes">checktypes(...)</a></td>
+  <td class="summary">Checks whether the arguments of the calling function are of the given types.</td>
   </tr>
 </table>
 
@@ -99,6 +108,37 @@
         <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> foo(t, filter)
   argerror(<span class="number">1</span>, <span class="string">"extra message..."</span>)</pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "argerrorf"></a>
+    <strong>argerrorf(arg, fmt, ...)</strong>
+    </dt>
+    <dd>
+    Raises an error reporting a problem with argument <code>arg</code> of the function that called it,
+ using a standard message including a formatted message as a comment.
+ This function never returns.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arg</span>
+            <span class="types"><span class="type">integer</span></span>
+         argument number.
+        </li>
+        <li><span class="parameter">fmt</span>
+            <span class="types"><span class="type">string</span></span>
+         additional text to use as comment.
+        </li>
+        <li><span class="parameter">...</span>
+         values to use in the formatted message.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -159,12 +199,12 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">arg</span>
-            <span class="types"><span class="type">int</span></span>
-         position of the argument to be tested
+            <span class="types"><span class="type">integer</span></span>
+         position of the argument to be tested.
         </li>
         <li><span class="parameter">expected</span>
             <span class="types"><span class="type">string</span></span>
-         descriptor of the acceptable types
+         descriptor of the acceptable types.
         </li>
     </ul>
 
@@ -176,6 +216,35 @@
         <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> foo(t, filter)
   checktype(<span class="number">1</span>, <span class="string">'table'</span>)
   checktype(<span class="number">2</span>, <span class="string">'function'</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "checktypes"></a>
+    <strong>checktypes(...)</strong>
+    </dt>
+    <dd>
+    Checks whether the arguments of the calling function are of the given types. </p>
+
+<p> The type of the argument at position <code>arg</code> must match one of the types in `expected.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         descriptors of the acceptable types (see <a href="index.html#checktype">checktype</a>).
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> foo(t, filter)
+  checktypes(<span class="string">'table'</span><span class="string">'function'</span>)
+  ...</pre>
     </ul>
 
 </dd>

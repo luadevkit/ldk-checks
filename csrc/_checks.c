@@ -240,8 +240,8 @@ static int match(int type, const char *got, const char *expected, size_t expecte
  *    checktype(1, 'int|table') -- will match an integer or a table
  *
  * @function checktype
- * @int arg position of the argument to be tested
- * @string expected descriptor of the acceptable types
+ * @tparam integer arg position of the argument to be tested.
+ * @tparam string expected descriptor of the acceptable types.
  * @usage
  *    local function foo(t, filter)
  *      checktype(1, 'table')

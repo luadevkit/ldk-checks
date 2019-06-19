@@ -40,7 +40,10 @@ spec:
 build: $(rockspec)
 	luarocks make $(rockspec)
 
- circleci-build:
+build-dev: rockspec-dev
+	luarocks make
+
+circleci-build:
 	$(circleci) circleci build --job build
 
 circleci-shell:
