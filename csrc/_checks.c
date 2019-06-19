@@ -280,6 +280,17 @@ static int check_one(lua_State *L, int arg, const char *expected, size_t expecte
   return type_error(L, arg, type, got, expected, expected_len);
 }
 
+/***
+ * Checks whether the arguments of the calling function are of the given types.
+ *
+ * The type of the argument at position `arg` must match one of the types in `expected.
+ * @function checktypes
+ * @param ... descriptors of the acceptable types (see @{checktype}).
+ * @usage
+ *    local function foo(t, filter)
+ *      checktypes('table''function')
+ *      ...
+ */
 static int checks_checktype(lua_State *L)
 {
   lua_Debug ar;
@@ -297,6 +308,28 @@ static int checks_checktype(lua_State *L)
     return luaL_argerror(L, 1, "invalid argument index");
   }
   return check_one(L, arg, expected, expected_len);
+}
+
+static int checks_checktypes(lua_State *L)
+{
+  lua_Debug ar;
+  if (!lua_getstack(L, 1, &ar))
+  {
+    return luaL_error(L, "'checktypes' not called from a Lua function");
+  }
+
+  int n = lua_gettop(L);
+  for (int arg = 1; arg <= n; arg++)
+  {
+    size_t expected_len;
+    const char *expected = luaL_checklstring(L, arg, &expected_len);
+    if (!lua_getlocal(L, &ar, arg))
+    {
+      return luaL_argerror(L, arg, "no more arguments");
+    }
+    check_one(L, arg, expected, expected_len);
+  }
+  return 0;
 }
 
 /**
@@ -324,6 +357,7 @@ static int checks_argerror(lua_State *L)
 // clang-format off
 static const struct luaL_Reg funcs[] = {
   { "checktype", checks_checktype },
+  { "checktypes", checks_checktypes },
   { "argerror", checks_argerror },
   { NULL, NULL } };
 //clang-format on

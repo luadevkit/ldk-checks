@@ -6,6 +6,7 @@ local _checks = require 'ldk._checks'
 local _ENV = M
 
 checktype = _checks.checktype
+checktypes = _checks.checktypes
 argerror = _checks.argerror
 
 --- Raises an error reporting a problem with argument `arg` of the function that called it,

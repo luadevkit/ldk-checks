@@ -56,6 +56,47 @@ describe("ldk.checks", function()
     end)
   end)
 
+  describe("#checktypes", function()
+    describe("with one specifier", function()
+      local function f1(tag, x)
+        local function f(_)
+          checks.checktypes(tag)
+        end
+        return function()
+          f(x)
+        end
+      end
+      it("should report errors", function()
+        assert.error(f1('boolean', nil), "bad argument #1 to 'f' (boolean expected, got nil)")
+        assert.error(f1('function', {1337}), "bad argument #1 to 'f' (function expected, got table)")
+      end)
+    end)
+    describe("with multiple specifiers", function()
+      local function f2(tag1, tag2, x, y)
+        local function f(_, _)
+          checks.checktypes(tag1, tag2)
+        end
+        return function()
+          f(x, y)
+        end
+      end
+      local function f1(tag1, tag2, x)
+        local function f(_)
+          checks.checktypes(tag1, tag2)
+        end
+        return function()
+          f(x)
+        end
+      end
+      it("should report errors", function()
+        assert.error(f2('boolean', 'string', nil, nil), "bad argument #1 to 'f' (boolean expected, got nil)")
+        assert.error(f2('boolean', 'string', true, nil), "bad argument #2 to 'f' (string expected, got nil)")
+      end)
+      it("should report missing arguments", function()
+        assert.error(f1('boolean', 'string', true), "bad argument #2 to 'checktypes' (no more arguments)")
+      end)
+    end)
+  end)
   describe("#checktype", function()
     local function f0(arg, tag)
       local function f()
