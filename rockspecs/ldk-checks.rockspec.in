@@ -16,6 +16,7 @@ dependencies = {
 }
 build = {
   modules = {
-    ['ldk.checks'] = 'csrc/checks.c'
+    ['ldk._checks'] = 'csrc/_checks.c',
+    ['ldk.checks'] = 'src/ldk/checks.lua'
   }
 }

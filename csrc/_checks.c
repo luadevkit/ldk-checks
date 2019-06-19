@@ -328,7 +328,7 @@ static const struct luaL_Reg funcs[] = {
   { NULL, NULL } };
 //clang-format on
 
-extern int luaopen_ldk_checks(lua_State *L)
+extern int luaopen_ldk__checks(lua_State *L)
 {
   lua_newtable(L);
   luaL_setfuncs(L, funcs, 0);
