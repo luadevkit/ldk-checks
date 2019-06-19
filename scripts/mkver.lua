@@ -83,35 +83,41 @@ local function write_versionrc(version)
   log("wrote '%s' to %s", version, VERSIONRC)
 end
 
+local function inc_version(version, what)
+  version[what] = version[what] + 1
+  if what == 'minor' then
+    version.patch = 0
+  elseif what == 'major' then
+    version.minor = 0
+    version.patch = 0
+  end
+end
+
 local function new_version(...)
   local args, opts = parse_opts(table.pack(...), {
-    tag = BoolOpt
+    ['create-branch'] = BoolOpt,
   })
 
+  local version
   if args[1] then
-    local version = parse_tag(args[1])
-    if version then
-      return write_versionrc(version)
-    end
+    version = parse_tag(args[1])
   end
-
-  local version = read_versionrc()
+  if not version then
+    version = read_versionrc()
+  end
   if not version then
     version = { major = 0, minor = 1, patch = 0 }
   end
-
   local what = args[1] or 'patch'
-  local value = version[what]
-  if not value then
+  if not version[what] then
     fail("invalid argument '%s'", what)
   end
+  inc_version(version, what)
 
-  version[what] = value + 1
   write_versionrc(version)
-
-  if opts.tag then
-    local git_cmd = 'git tag '
-    git_cmd = git_cmd .. make_tag(version)
+  if opts['create-branch'] then
+    local git_cmd = 'git checkout -b release/'
+    git_cmd = git_cmd .. mk_string(version)
     log(git_cmd)
     os.execute(git_cmd)
   end
