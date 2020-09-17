@@ -1,0 +1,26 @@
+{
+  "files.associations": {
+    ".luacheckrc": "lua",
+    ".luacov": "lua",
+    "*.ld.in": "lua",
+    "*.ld": "lua",
+    "*.ltp": "html",
+    "*.rockspec": "lua",
+    "Makefile.in": "makefile",
+    "rockspec.in": "lua",
+    ".busted": "lua"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.obj": true,
+    "ldk/**": true,
+  },
+  "cSpell.customWorkspaceDictionaries": [
+    "project-dict",
+    "lua-dict"
+  ]
+}
