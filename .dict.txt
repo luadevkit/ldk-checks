@@ -1,0 +1,6 @@
+lerror
+errorf
+CHK_EUSERDATA
+CHK_EFILE
+CHK_STRNEQ
+unregister

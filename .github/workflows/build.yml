@@ -1,0 +1,31 @@
+name: 'Build'
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+    paths:
+      - 'src/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dwenegar/setup-lua@master
+        with:
+          lua-version: '5.4'
+          luarocks-version: latest
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: lint
+        run: |
+          luarocks install luacheck
+          luacheck --formatter TAP spec
+      - name: build
+        run: |
+          luarocks make
+      - name: test
+        run: |
+          luarocks install busted
+          luarocks test -- --run=test
